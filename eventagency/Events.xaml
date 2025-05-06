@@ -25,7 +25,7 @@
             <Label Content="Название"/>
             <TextBox Text="{Binding Title}"/>
             <Label Content="Дата проведения"/>
-            <DatePicker Height="20" DataContext="{Binding Date}"/>
+            <DatePicker Height="20" SelectedDate="{Binding Date}"/>
             <Label Content="Место проведения"/>
             <TextBox Text="{Binding Place}"/>
             <Label Content="Бюджет"/>

@@ -8,12 +8,6 @@ namespace eventagency.Model
 {
     public class Event
     {
-        private Client selectedClient;
-
-        public Event(Client selectedClient)
-        {
-            this.selectedClient = selectedClient;
-        }
 
         public int ID { get; set; }
         public string Title { get; set; }

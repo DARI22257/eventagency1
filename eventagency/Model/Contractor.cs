@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eventagency.Model
 {
-    internal class Contractor
+    public class Contractor
     {
         public int ID { get; set; }
         public string Title { get; set; }
