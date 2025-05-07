@@ -68,7 +68,7 @@ namespace eventagency.VM
 
             NextPage = new CommandMvvm(() =>
             {
-                Clients events = new Clients(SelectedClient);
+                Events events = new Events(new Order { Client = SelectedClient });
                 events.Show();
                 close?.Invoke();
             },

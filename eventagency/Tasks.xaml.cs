@@ -27,11 +27,11 @@ namespace eventagency
             ((TasksMvvm)this.DataContext).SetClose(Close);
         }
 
-        public Tasks(TaskWork selectedTask)
+        public Tasks(Order selectedOrder)
         {
             InitializeComponent();
             ((TasksMvvm)this.DataContext).SetClose(Close);
-            ((TasksMvvm)this.DataContext).NewTask = selectedTask;
+            ((TasksMvvm)this.DataContext).SelectedOrder = selectedOrder;
         }
 
         private void GoToNextPage_Click(object sender, RoutedEventArgs e)

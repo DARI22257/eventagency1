@@ -82,7 +82,7 @@ namespace eventagency.Model
                         string notes = string.Empty;
                         // проверка на то, что столбец имеет значение
                         if (!dr.IsDBNull(1))
-                            title = dr.GetString("Tile");
+                            title = dr.GetString("Title");
                         if (!dr.IsDBNull(2))
                             type = dr.GetString("Type");
                         if (!dr.IsDBNull(3))

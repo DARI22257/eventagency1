@@ -11,7 +11,7 @@ namespace eventagency.Model
 
         public int ID { get; set; }
         public string Title { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public string Place { get; set; }
         public int Budget { get; set; }
         public string Status { get; set; }

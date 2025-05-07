@@ -11,6 +11,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         
         <StackPanel Orientation="Horizontal" >
             <TextBlock Text="Поиск:"/>
@@ -19,15 +24,47 @@
 
 
         <!-- Список клиентов -->
-        <ListView x:Name="ClientList" Grid.Row="1">
+        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="200"/>
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="150"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="200"/>
-                    <GridViewColumn Header="Заметки" DisplayMemberBinding="{Binding Notes}" Width="200"/>
+                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Client.FullName}" Width="100"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Client.Phone}" Width="100"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Client.Email}" Width="100"/>
+                    <GridViewColumn Header="Заметки" DisplayMemberBinding="{Binding Client.Notes}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1" DataContext="{Binding SelectedOrder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel DataContext="{Binding Event}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Date}"/>
+                    <TextBlock Text="{Binding Place}"/>
+                </StackPanel>
+
+                <StackPanel DataContext="{Binding Task}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Term}"/>
+                    <TextBlock Text="{Binding Description}"/>
+                    <TextBlock Text="{Binding Assigned}"/>
+                    <TextBlock Text="{Binding Status}"/>
+                </StackPanel>
+
+                <StackPanel DataContext="{Binding Contractor}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Type}"/>
+                    <TextBlock Text="{Binding Email}"/>
+                    <TextBlock Text="{Binding Notes}"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

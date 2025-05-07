@@ -9,10 +9,10 @@ namespace eventagency.VM
 {
     internal class LibrarysMvvm : BaseVM
     {
-        private List<Client> clients;
+        private List<Order> clients;
         private string search;
 
-        public List<Client> Clients
+        public List<Order> Clients
         {
             get => clients;
             set
@@ -31,6 +31,8 @@ namespace eventagency.VM
                 SearchClient(search);
             }
         }
+
+        public Order? SelectedOrder { get; internal set; }
 
         private void SearchClient(string search)
         {

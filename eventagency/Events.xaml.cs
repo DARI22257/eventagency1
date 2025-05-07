@@ -28,11 +28,11 @@ namespace eventagency
             ((EventsMvvm)this.DataContext).SetClose(Close);
         }
 
-        public Events(Event selectedEvent)
+        public Events(Order selectedOrder)
         {
             InitializeComponent();
             ((EventsMvvm)this.DataContext).SetClose(Close);
-            ((EventsMvvm)this.DataContext).SelectedEvent = selectedEvent;
+            ((EventsMvvm)this.DataContext).SelectedOrder = selectedOrder;
         }
 
         private void NavigateButton_Click(object sender, RoutedEventArgs e)

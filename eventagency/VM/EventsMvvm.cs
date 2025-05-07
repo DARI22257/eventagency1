@@ -50,6 +50,8 @@ namespace eventagency.VM
         public CommandMvvm InsertEvent { get; set; }
 
         public CommandMvvm NextPage { get; set; }
+        public Order SelectedOrder { get; internal set; }
+
         public EventsMvvm()
         {
             SelectAll();
@@ -61,14 +63,15 @@ namespace eventagency.VM
             },
                 () =>
                 !string.IsNullOrEmpty(newEvent.Title) &&
-                DateOnly.MinValue != newEvent.Date &&
+                DateTime.MinValue != newEvent.Date &&
                 !string.IsNullOrEmpty(newEvent.Place) &&
                 newEvent.Budget != 0 &&
                 !string.IsNullOrEmpty(newEvent.Status));
 
             NextPage = new CommandMvvm(() =>
             {
-                Events tasks = new Events(SelectedEvent);
+                SelectedOrder.Event = SelectedEvent;
+                Tasks tasks = new Tasks(SelectedOrder);
                 tasks.Show();
                 close?.Invoke();
             },

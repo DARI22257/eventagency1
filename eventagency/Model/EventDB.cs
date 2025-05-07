@@ -78,7 +78,7 @@ namespace eventagency.Model
                     {
                         int id = dr.GetInt32(0);
                         string title = string.Empty;
-                        DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+                        DateTime date = DateTime.Now;
                         string place = string.Empty;
                         int budget = 0;
                         string status = string.Empty;
@@ -86,7 +86,7 @@ namespace eventagency.Model
                         if (!dr.IsDBNull(1))
                             title = dr.GetString("Title");
                         if (!dr.IsDBNull(2))
-                            date = dr.GetDateOnly("Date");
+                            date = dr.GetDateTime("Date");
                         if (!dr.IsDBNull(3))
                             place = dr.GetString("Place");
                         if (!dr.IsDBNull(4))

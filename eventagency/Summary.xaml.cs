@@ -11,20 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using eventagency.Model;
-using eventagency.VM;
 
 namespace eventagency
 {
     /// <summary>
-    /// Логика взаимодействия для Clients.xaml
+    /// Логика взаимодействия для Summary.xaml
     /// </summary>
-    public partial class Clients : Window
+    public partial class Summary : Window
     {
-        public Clients()
+        public Summary()
         {
             InitializeComponent();
-            ((ClientsMvvm)this.DataContext).SetClose(Close);
         }
     }
 }

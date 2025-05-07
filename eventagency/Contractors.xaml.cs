@@ -26,11 +26,11 @@ namespace eventagency
             InitializeComponent();
             ((ContractorsMvvm)this.DataContext).SetClose(Close);
         }
-        public Contractors(Contractor selectedContractor)
+        public Contractors(Order selectedOrder)
         {
             InitializeComponent();
             ((ContractorsMvvm)this.DataContext).SetClose(Close);
-            ((ContractorsMvvm)this.DataContext).SelectedContractor = selectedContractor;
+            ((ContractorsMvvm)this.DataContext).SelectedOrder = selectedOrder;
         }
 
 

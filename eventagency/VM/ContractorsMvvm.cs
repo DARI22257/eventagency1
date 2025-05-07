@@ -50,6 +50,8 @@ namespace eventagency.VM
         public CommandMvvm InsertContractor { get; set; }
 
         public CommandMvvm NextPage { get; set; }
+        public Order SelectedOrder { get; internal set; }
+
         public ContractorsMvvm()
         {
             SelectAll();
@@ -65,13 +67,14 @@ namespace eventagency.VM
                 !string.IsNullOrEmpty(newContractor.Email) &&
                 !string.IsNullOrEmpty(newContractor.Notes));
 
-            //NextPage = new CommandMvvm(() =>
-            //{
-            //    Events events = new Events(SelectedClient);
-            //    events.Show();
-            //    close?.Invoke();
-            //},
-            //    () => SelectedClient != null);
+            NextPage = new CommandMvvm(() =>
+            {
+                SelectedOrder.Contractor = SelectedContractor;
+                SummaryOrder events = new SummaryOrder(SelectedOrder);
+                events.Show();
+                close?.Invoke();
+            },
+                () => SelectedOrder != null);
         }
 
         private void SelectAll()

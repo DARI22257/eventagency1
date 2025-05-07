@@ -25,7 +25,7 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `Task` Values (0, @title, @description, @term, @assigned, @status);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `Tasks` Values (0, @title, @description, @term, @assigned, @status);select LAST_INSERT_ID();");
 
                 // путем добавления значений в запрос через параметры мы используем экранирование опасных символов
                 cmd.Parameters.Add(new MySqlParameter("title", tasks.Title));
@@ -68,7 +68,7 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `Title`, `Description`, `Term`, `Assigned`, `Status` from `Task` ");
+                var command = connection.CreateCommand("select `id`, `Title`, `Description`, `Term`, `Assigned`, `Status` from `Tasks` ");
                 try
                 {
                     // выполнение запроса, который возвращает результат-таблицу
@@ -79,7 +79,7 @@ namespace eventagency.Model
                         int id = dr.GetInt32(0);
                         string title = string.Empty;
                         string description = string.Empty;
-                        DateOnly term = DateOnly.FromDateTime(DateTime.Now);
+                        DateTime term = DateTime.Now;
                         string assigned = string.Empty;
                         string status = string.Empty;
                         // проверка на то, что столбец имеет значение
@@ -88,7 +88,7 @@ namespace eventagency.Model
                         if (!dr.IsDBNull(2))
                             description = dr.GetString("Description");
                         if (!dr.IsDBNull(3))
-                            term = dr.GetDateOnly("Term");
+                            term = dr.GetDateTime("Term");
                         if (!dr.IsDBNull(4))
                             assigned = dr.GetString("Assigned");
                         if (!dr.IsDBNull(4))
@@ -122,7 +122,7 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"update `Task` set `Title`=@title, `Description`=@description, `Term`=@term, `Assigned`=@assigned, `Status`=@status where `id` = {edit.ID}");
+                var mc = connection.CreateCommand($"update `Tasks` set `Title`=@title, `Description`=@description, `Term`=@term, `Assigned`=@assigned, `Status`=@status where `id` = {edit.ID}");
                 mc.Parameters.Add(new MySqlParameter("title", edit.Title));
                 mc.Parameters.Add(new MySqlParameter("description", edit.Description));
                 mc.Parameters.Add(new MySqlParameter("term", edit.Term));
@@ -152,7 +152,7 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                var mc = connection.CreateCommand($"delete from `Task` where `id` = {remove.ID}");
+                var mc = connection.CreateCommand($"delete from `Tasks` where `id` = {remove.ID}");
                 try
                 {
                     mc.ExecuteNonQuery();
