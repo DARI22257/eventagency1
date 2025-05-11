@@ -22,21 +22,21 @@ namespace eventagency.VM
             }
         }
 
-        public string Search
-        {
-            get => search;
-            set
-            {
-                search = value;
-                SearchClient(search);
-            }
-        }
+        //public string Search
+        //{
+        //    get => search;
+        //    set
+        //    {
+        //        search = value;
+        //        SearchClient(search);
+        //    }
+        //}
 
         public Order? SelectedOrder { get; internal set; }
 
-        private void SearchClient(string search)
-        {
-            Clients = Library.GetTable().SearchClient(search);
-        }
+        //private void SearchClient(string search)
+        //{
+        //    Clients = Library.GetTable().SearchClient(search);
+        //}
     }
 }

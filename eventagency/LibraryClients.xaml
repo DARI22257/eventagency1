@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eventagency"
         mc:Ignorable="d"
-        Title="Library" Height="450" Width="800">
+        Title="Library" Height="450" Width="800" Background="LightPink">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,15 +16,15 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Orientation="Horizontal" >
+
+        <StackPanel Orientation="Horizontal" Background="MistyRose" Height="20">
             <TextBlock Text="Поиск:"/>
             <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
         </StackPanel>
 
 
         <!-- Список клиентов -->
-        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" Background="MistyRose">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Client.FullName}" Width="100"/>
@@ -35,7 +35,7 @@
             </ListView.View>
         </ListView>
 
-        <ScrollViewer Grid.Column="1" Grid.Row="1" DataContext="{Binding SelectedOrder}">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />

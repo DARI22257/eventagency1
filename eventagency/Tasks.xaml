@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:eventagency.VM"
         DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
-        Title="Tasks" Height="450" Width="800">
+        Title="Tasks" Height="450" Width="800" Background="LightPink">
     <Window.Resources>
         <vm:TasksMvvm x:Key="vm"/>
     </Window.Resources>
@@ -17,24 +17,28 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="10" DataContext="{Binding NewTask}">
-            <Label Content="Название"/>
-            <TextBox Text="{Binding Title}"/>
-            <Label Content="Описание"/>
-            <TextBox Text="{Binding Description}"/>
-            <Label Content="Дата проведения"/>
+        <Label Content="Добавить задачу" FontSize="20" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10" DataContext="{Binding NewTask}">
+            <Label Content="Название" FontSize="20"/>
+            <TextBox Text="{Binding Title}" Height="30"/>
+            <Label Content="Описание" FontSize="20"/>
+            <TextBox Text="{Binding Description}" Height="30"/>
+            <Label Content="Дата проведения" FontSize="20"/>
             <DatePicker Height="20"  SelectedDate="{Binding Term}"/>
-            <Label Content="Руководитель"/>
-            <TextBox Text="{Binding Assigned}"/>
-            <Label Content="Статус"/>
-            <TextBox Text="{Binding Status}"/>
+            <Label Content="Руководитель" FontSize="20"/>
+            <TextBox Text="{Binding Assigned}" Height="30"/>
+            <Label Content="Статус" FontSize="20"/>
+            <TextBox Text="{Binding Status}" Height="30"/>
         </StackPanel>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}">
+        <ListView Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}" Background="MistyRose">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" Width="80"/>
@@ -52,12 +56,12 @@
         </ListView>
 
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
+        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
             <Button Content="Добавить мероприятие" Command="{Binding InsertTask}" Width="150" Height="40" />
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Далее" Width="100" Height="40" Command="{Binding NextPage}"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Далее" Width="150" Height="40" Command="{Binding NextPage}"/>
         </StackPanel>
     </Grid>
 </Window>

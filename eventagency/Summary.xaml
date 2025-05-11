@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="Summary" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Пождтверждение" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"/>
+        <Label Content="Цена" Grid.Row="1" FontSize="16"/>
+        <TextBox Grid.Row="2" Height="30"/>
+        <Label Content="Описание сервиса " Grid.Row="1"  Grid.Column="2" FontSize="16"/>
+        <TextBox Grid.Column="2" Grid.Row="2"/>
+
+        <Button Content="Добавить" Grid.Column="1" Grid.Row="3" Height="40"/>
+        <Button Content="Подтвердить" Grid.Column="1" Grid.Row="5" Height="40" Width="200"/>
+        <Button Content="На главную" Grid.Column="2" Grid.Row="5" Height="40" Width="200"/>
     </Grid>
 </Window>
