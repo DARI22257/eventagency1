@@ -12,5 +12,7 @@ namespace eventagency.Model
         public Event Event { get; set; }
         public TaskWork Task { get; set; }
         public Contractor Contractor { get; set; }
+
+        public EventContractor EventContractor { get; set; } = new();
     }
 }

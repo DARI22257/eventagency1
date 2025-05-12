@@ -57,6 +57,11 @@ namespace eventagency.Model
                 library = new Library(DbConnection.GetDbConnection());
             return library;
         }
+
+        internal Order GetLastOrder(Client? value)
+        {
+            throw new NotImplementedException();
+        }
         // синглтон end
     }
 }

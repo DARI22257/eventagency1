@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eventagency"
+        xmlns:vm="clr-namespace:eventagency.VM"
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
-        Title="Summary" Height="450" Width="800">
+        Title="Summary" Height="450" Width="800" Background="LightPink">
+    <Window.Resources>
+        <vm:EventContractorMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,12 +29,51 @@
 
         <Label Content="Пождтверждение" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"/>
         <Label Content="Цена" Grid.Row="1" FontSize="16"/>
-        <TextBox Grid.Row="2" Height="30"/>
+        <TextBox Grid.Row="2" Height="30" Text="{Binding SelectedOrder.EventContractor.Price}"/>
         <Label Content="Описание сервиса " Grid.Row="1"  Grid.Column="2" FontSize="16"/>
-        <TextBox Grid.Column="2" Grid.Row="2"/>
+        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedOrder.EventContractor.DescriptionService}"/>
 
-        <Button Content="Добавить" Grid.Column="1" Grid.Row="3" Height="40"/>
-        <Button Content="Подтвердить" Grid.Column="1" Grid.Row="5" Height="40" Width="200"/>
+        <ScrollViewer Grid.ColumnSpan="3" Grid.Row="4" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel DataContext="{Binding Client}">
+                    <TextBlock Text="{Binding FullName}"/>
+                    <TextBlock Text="{Binding Phone}"/>
+                    <TextBlock Text="{Binding Email}"/>
+                    <TextBlock Text="{Binding Notes}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" DataContext="{Binding Event}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Date}"/>
+                    <TextBlock Text="{Binding Place}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" DataContext="{Binding Task}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Term}"/>
+                    <TextBlock Text="{Binding Description}"/>
+                    <TextBlock Text="{Binding Assigned}"/>
+                    <TextBlock Text="{Binding Status}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" DataContext="{Binding Contractor}">
+                    <TextBlock Text="{Binding Title}"/>
+                    <TextBlock Text="{Binding Type}"/>
+                    <TextBlock Text="{Binding Email}"/>
+                    <TextBlock Text="{Binding Notes}"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <Button Content="Добавить" Grid.Column="1" Grid.Row="3" Height="40" Command="{Binding InsertEventContractor}"/>
+        <Button Content="Подтвердить" Grid.Column="1" Grid.Row="5" Height="40" Width="200" />
         <Button Content="На главную" Grid.Column="2" Grid.Row="5" Height="40" Width="200"/>
     </Grid>
 </Window>

@@ -67,14 +67,14 @@ namespace eventagency.VM
                 !string.IsNullOrEmpty(newContractor.Email) &&
                 !string.IsNullOrEmpty(newContractor.Notes));
 
-            //NextPage = new CommandMvvm(() =>
-            //{
-            //    SelectedOrder.Contractor = SelectedContractor;
-            //    SummaryOrder events = new SummaryOrder(SelectedOrder);
-            //    events.Show();
-            //    close?.Invoke();
-            //},
-            //    () => SelectedOrder != null);
+            NextPage = new CommandMvvm(() =>
+            {
+                SelectedOrder.Contractor = SelectedContractor;
+                Summary contractor = new Summary(SelectedOrder);
+                contractor.Show();
+                close?.Invoke();
+            },
+                () => SelectedOrder != null);
         }
 
         private void SelectAll()

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using eventagency.Model;
+using eventagency.VM;
 
 namespace eventagency
 {
@@ -22,6 +24,18 @@ namespace eventagency
         public Summary()
         {
             InitializeComponent();
+            ((EventContractorMvvm)this.DataContext).SetClose(Close);
+        }
+        public Summary(Order selectedOrder)
+        {
+            InitializeComponent();
+            ((EventContractorMvvm)this.DataContext).SetClose(Close);
+            ((EventContractorMvvm)this.DataContext).SelectedOrder = selectedOrder;
+        }
+        private void NavigateButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
         }
     }
 }

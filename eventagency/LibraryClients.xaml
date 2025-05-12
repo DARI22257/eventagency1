@@ -24,13 +24,13 @@
 
 
         <!-- Список клиентов -->
-        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" Background="MistyRose">
+        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" Background="MistyRose">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Client.FullName}" Width="100"/>
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Client.Phone}" Width="100"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Client.Email}" Width="100"/>
-                    <GridViewColumn Header="Заметки" DisplayMemberBinding="{Binding Client.Notes}" Width="100"/>
+                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="100"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone}" Width="100"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="100"/>
+                    <GridViewColumn Header="Заметки" DisplayMemberBinding="{Binding Notes}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

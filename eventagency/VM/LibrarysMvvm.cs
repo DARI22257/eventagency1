@@ -9,34 +9,55 @@ namespace eventagency.VM
 {
     internal class LibrarysMvvm : BaseVM
     {
-        private List<Order> clients;
+        private List<Client> orders;
         private string search;
+        private Client? selectedClient;
+        private Order selectedOrder;
 
-        public List<Order> Clients
+        public List<Client> Clients
         {
-            get => clients;
+            get => orders;
             set
             {
-                clients = value;
+                orders = value;
                 Signal();
             }
         }
 
-        //public string Search
-        //{
-        //    get => search;
-        //    set
-        //    {
-        //        search = value;
-        //        SearchClient(search);
-        //    }
-        //}
+        public string Search
+        {
+            get => search;
+            set
+            {
+                search = value;
+                SearchClient(search);
+            }
+        }
 
-        public Order? SelectedOrder { get; internal set; }
+        public Client? SelectedClient
+        {
+            get => selectedClient;
+            set
+            {
+                selectedClient = value;
+                Signal();
+                SelectedOrder = Library.GetTable().GetLastOrder(value);
+            }
+        }
 
-        //private void SearchClient(string search)
-        //{
-        //    Clients = Library.GetTable().SearchClient(search);
-        //}
+        public Order SelectedOrder { 
+            get => selectedOrder;
+            set
+            {
+                selectedOrder = value;
+                Signal();
+            }
+        }
+
+
+        private void SearchClient(string search)
+        {
+            Clients = Library.GetTable().SearchClient(search);
+        }
     }
 }
