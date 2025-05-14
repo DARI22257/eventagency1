@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eventagency"
+        xmlns:vm="clr-namespace:eventagency.VM"
+        DataContext="{DynamicResource vm}"
         mc:Ignorable="d"
         Title="Library" Height="450" Width="800" Background="LightPink">
+    <Window.Resources>
+        <vm:LibrarysMvvm x:Key="vm"/>
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,7 +29,7 @@
 
 
         <!-- Список клиентов -->
-        <ListView x:Name="ClientList" Grid.Row="1" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" Background="MistyRose">
+        <ListView Grid.Row="1" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" Background="MistyRose">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" Width="100"/>
@@ -34,8 +39,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <ScrollViewer Grid.Column="1" Grid.Row="1" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Visibility="{Binding ViewOrder}" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -66,5 +70,15 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+        <ListBox Grid.Column="3" Margin="3" Grid.Row="1"  Visibility="{Binding ViewOrders}" ItemsSource="{Binding EventContractors}" SelectedItem="{Binding SelectedOrder}">
+            <ListBox.ItemTemplate>
+                <DataTemplate >
+                    <Grid>
+                        <TextBlock Text="{Binding Price}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
     </Grid>
 </Window>

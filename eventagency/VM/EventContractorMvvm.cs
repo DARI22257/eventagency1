@@ -34,17 +34,6 @@ namespace eventagency.VM
             }
         }
 
-        private ObservableCollection<EventContractor> eventcontractors = new();
-
-        public ObservableCollection<EventContractor> EventContractors
-        {
-            get => eventcontractors;
-            set
-            {
-                eventcontractors = value;
-                Signal();
-            }
-        }
 
 
         public CommandMvvm InsertEventContractor { get; set; }
@@ -61,7 +50,6 @@ namespace eventagency.VM
 
         public EventContractorMvvm()
         {
-            SelectAll();
             InsertEventContractor = new CommandMvvm(() =>
             {
                 NewEventContractor = new EventContractor { 
@@ -69,25 +57,29 @@ namespace eventagency.VM
                   Price = SelectedOrder.EventContractor.Price,
                     idTask = SelectedOrder.Task.ID,
                     idClient = SelectedOrder.Client.ID,
+                    idEvents = SelectedOrder.Event.ID,
+                    idContractor = SelectedOrder.Contractor.ID,
 
 
                 };
-                EventContractorDB.GetDb().Insert(NewEventContractor);
+                if(EventContractorDB.GetDb().Insert(NewEventContractor))
+                {
+                    close();
+                    LibraryClients library = new LibraryClients();
+                    library.Show();
+                }
 
                 NewEventContractor = new();
-                SelectAll();
+                
             },
-                () =>
+                () => SelectedOrder != null &&
                  SelectedOrder.EventContractor.Price != 0 &&
                 !string.IsNullOrEmpty(SelectedOrder.EventContractor.DescriptionService));
 
 
         }
 
-        private void SelectAll()
-        {
-            EventContractors = new ObservableCollection<EventContractor>(EventContractorDB.GetDb().SelectAll());
-        }
+        
         Action close;
         private Order selectedOrder;
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using eventagency.Model;
 
 namespace eventagency.VM
@@ -12,7 +14,18 @@ namespace eventagency.VM
         private List<Client> orders;
         private string search;
         private Client? selectedClient;
-        private Order selectedOrder;
+        private EventContractor selectedOrder;
+        private ObservableCollection<EventContractor> eventContractors;
+
+        public ObservableCollection<EventContractor> EventContractors
+        {
+            get => eventContractors;
+            set
+            {
+                eventContractors = value;
+                Signal();
+            }
+        }
 
         public List<Client> Clients
         {
@@ -41,23 +54,71 @@ namespace eventagency.VM
             {
                 selectedClient = value;
                 Signal();
-                SelectedOrder = Library.GetTable().GetLastOrder(value);
+                SelectAll();
+                ViewOrders = Visibility.Visible;
+                ViewOrder = Visibility.Collapsed;
             }
         }
 
-        public Order SelectedOrder { 
+        public EventContractor SelectedOrder
+        {
             get => selectedOrder;
             set
             {
                 selectedOrder = value;
+                if (value != null)
+                {
+                    ViewOrder = Visibility.Visible;
+                    ViewOrders = Visibility.Collapsed;
+                }
                 Signal();
             }
+        }
+        private void SelectAll()
+        {
+            if (SelectedClient != null)
+                EventContractors = new ObservableCollection<EventContractor>( EventContractorDB.GetDb().SelectAll(SelectedClient.ID));
         }
 
 
         private void SearchClient(string search)
         {
             Clients = Library.GetTable().SearchClient(search);
+        }
+
+        public Visibility ViewOrders
+        {
+            get => viewOrders;
+            set
+            {
+                viewOrders = value; 
+                Signal();
+            }
+        }
+        public Visibility ViewOrder
+        {
+            get => viewOrder;
+            set
+            {
+                viewOrder = value;
+                Signal();
+            }
+        }
+
+        public LibrarysMvvm()
+        {
+            Clients = Library.GetTable().SearchClient(search);
+            ViewOrders = Visibility.Visible;
+            ViewOrder = Visibility.Collapsed;
+        }
+
+        Action close;
+        private Visibility viewOrders;
+        private Visibility viewOrder;
+
+        internal void SetClose(Action close)
+        {
+            this.close = close;
         }
     }
 }

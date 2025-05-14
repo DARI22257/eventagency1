@@ -34,7 +34,7 @@
         <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedOrder.EventContractor.DescriptionService}"/>
 
         <ScrollViewer Grid.ColumnSpan="3" Grid.Row="4" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
-            <Grid>
+            <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -42,9 +42,9 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel DataContext="{Binding Client}">
-                    <TextBlock Text="{Binding FullName}"/>
-                    <TextBlock Text="{Binding Phone}"/>
+                <StackPanel DataContext="{Binding Client}" Margin="0 0 0 15">
+                    <TextBlock Text="{Binding FullName, StringFormat=ФИО: {0}}"/>
+                    <TextBlock Text="{Binding Phone, StringFormat=Телефон: {0}}"/>
                     <TextBlock Text="{Binding Email}"/>
                     <TextBlock Text="{Binding Notes}"/>
                 </StackPanel>
@@ -72,8 +72,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Button Content="Добавить" Grid.Column="1" Grid.Row="3" Height="40" Command="{Binding InsertEventContractor}"/>
-        <Button Content="Подтвердить" Grid.Column="1" Grid.Row="5" Height="40" Width="200" />
+        <Button Content="Подтвердить и закрыть" Grid.Column="1" Grid.Row="3" Height="40" Command="{Binding InsertEventContractor}" />
         <Button Content="На главную" Grid.Column="2" Grid.Row="5" Height="40" Width="200"/>
     </Grid>
 </Window>

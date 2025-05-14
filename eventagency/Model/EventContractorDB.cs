@@ -25,11 +25,15 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                MySqlCommand cmd = connection.CreateCommand("insert into `EventContractor` Values (0, @price, @descriptionservice);select LAST_INSERT_ID();");
+                MySqlCommand cmd = connection.CreateCommand("insert into `EventContractor` Values (0, @price, @descriptionservice, @idClient, @idTask, @idEvents, @idContractor);select LAST_INSERT_ID();");
 
                 // путем добавления значений в запрос через параметры мы используем экранирование опасных символов
-                cmd.Parameters.Add(new MySqlParameter("fullName", eventcontractor.Price));
-                cmd.Parameters.Add(new MySqlParameter("phone", eventcontractor.DescriptionService));
+                cmd.Parameters.Add(new MySqlParameter("price", eventcontractor.Price));
+                cmd.Parameters.Add(new MySqlParameter("descriptionservice", eventcontractor.DescriptionService));
+                cmd.Parameters.Add(new MySqlParameter("idClient", eventcontractor.idClient));
+                cmd.Parameters.Add(new MySqlParameter("idEvents", eventcontractor.idEvents));
+                cmd.Parameters.Add(new MySqlParameter("idTask", eventcontractor.idTask));
+                cmd.Parameters.Add(new MySqlParameter("idContractor", eventcontractor.idContractor));
 
                 // можно указать параметр через отдельную переменную
                 try
@@ -58,7 +62,7 @@ namespace eventagency.Model
             return result;
         }
 
-        internal List<EventContractor> SelectAll()
+        internal List<EventContractor> SelectAll(int clientId)
         {
             List<EventContractor> eventcontractors = new List<EventContractor>();
             if (connection == null)
@@ -66,7 +70,12 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("select `id`, `price`, `descriptionservice` from `EventContractor` ");
+                var command = connection.CreateCommand("SELECT c.ID AS 'clientid', c.FullName, c.Phone, c.Email, c.Notes, ec.descriptionservice, ec.price, c1.id AS 'ClientId', c1.title as 'cTitle', c1.type, c1.email AS 'cemail', c1.notes AS 'cnotes', t.id AS 'TaskId', t.title AS 'ttitle', t.description, t.term, t.assigned, t.status, e.id, e.title AS 'etitle', e.date, e.place, e.budget, e.status FROM Clients c" +
+                    " join EventContractor AS ec ON ec.idClient = c.id" +
+                    " JOIN Contractor c1 ON ec.idContractor = c1.id" +
+                    " JOIN Events e ON ec.idEvents = e.id" +
+                    " JOIN Tasks t ON ec.idTask = t.id" +
+                    " WHERE c.id = " + clientId + " ORDER BY ec.id DESC LIMIT 1 ");
                 try
                 {
                     // выполнение запроса, который возвращает результат-таблицу
@@ -77,11 +86,70 @@ namespace eventagency.Model
                         int id = dr.GetInt32(0);
                         int price = 0;
                         string descriptionservice = string.Empty;
+                        int idClient = dr.GetInt32(0);
+                        string fullName = string.Empty;
+                        string phone = string.Empty;
+                        string email = string.Empty;
+                        string notes = string.Empty;
+                        int idEvents = dr.GetInt32(0);
+                        string etitle = string.Empty;
+                        DateTime date = DateTime.Now;
+                        string place = string.Empty;
+                        int budget = 0;
+                        string status = string.Empty;
+                        int idTask = dr.GetInt32(0);
+                        string ttitle = string.Empty;
+                        string description = string.Empty;
+                        DateTime term = DateTime.Now;
+                        string assigned = string.Empty;
+                        string status1 = string.Empty;
+                        int idContractor = dr.GetInt32(0);
+                        string ctitle = string.Empty;
+                        string type = string.Empty;
+                        string cemail = string.Empty;
+                        string cnotes = string.Empty;
+
                         // проверка на то, что столбец имеет значение
                         if (!dr.IsDBNull(1))
                             price = dr.GetInt32("Price");
                         if (!dr.IsDBNull(2))
                             descriptionservice = dr.GetString("DescriptionService");
+                        if (!dr.IsDBNull(3))
+                            fullName = dr.GetString("FullName");
+                        if (!dr.IsDBNull(4))
+                            phone = dr.GetString("Phone");
+                        if (!dr.IsDBNull(5))
+                            email = dr.GetString("Email");
+                        if (!dr.IsDBNull(6))
+                            notes = dr.GetString("Notes");
+                        if (!dr.IsDBNull(7))
+                            etitle = dr.GetString("eTitle");
+                        if (!dr.IsDBNull(8))
+                            date = dr.GetDateTime("Date");
+                        if (!dr.IsDBNull(9))
+                            place = dr.GetString("Place");
+                        if (!dr.IsDBNull(10))
+                            budget = dr.GetInt32("Budget");
+                        if (!dr.IsDBNull(11))
+                            status = dr.GetString("Status");
+                        if (!dr.IsDBNull(12))
+                            ttitle = dr.GetString("tTitle");
+                        if (!dr.IsDBNull(13))
+                            description = dr.GetString("Description");
+                        if (!dr.IsDBNull(14))
+                            term = dr.GetDateTime("Term");
+                        if (!dr.IsDBNull(15))
+                            assigned = dr.GetString("Assigned");
+                        if (!dr.IsDBNull(16))
+                            status = dr.GetString("Status");
+                        if (!dr.IsDBNull(17))
+                            ctitle = dr.GetString("cTitle");
+                        if (!dr.IsDBNull(18))
+                            type = dr.GetString("Type");
+                        if (!dr.IsDBNull(19))
+                            cemail = dr.GetString("cEmail");
+                        if (!dr.IsDBNull(20))
+                            cnotes = dr.GetString("cNotes");
 
 
                         eventcontractors.Add(new EventContractor
@@ -89,6 +157,15 @@ namespace eventagency.Model
                             ID = id,
                             Price = price,
                             DescriptionService = descriptionservice,
+                            Client = new Client
+                            {
+                                Email = email,
+                                FullName = fullName,
+                                ID = clientId,
+                                Notes = notes,
+                                Phone = phone
+                            },
+
                         });
                     }
                 }

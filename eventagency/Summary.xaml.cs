@@ -32,6 +32,7 @@ namespace eventagency
             ((EventContractorMvvm)this.DataContext).SetClose(Close);
             ((EventContractorMvvm)this.DataContext).SelectedOrder = selectedOrder;
         }
+
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

@@ -25,5 +25,10 @@ namespace eventagency
             Clients clients = new Clients();
             clients.Show();
         }
+        private void NavigateButton_Click1(object sender, RoutedEventArgs e)
+        {
+            LibraryClients clients = new LibraryClients();
+            clients.Show();
+        }
     }
 }

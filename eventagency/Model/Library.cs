@@ -36,6 +36,8 @@ namespace eventagency.Model
                             book.Phone = dr.GetString("Phone");
                             book.Email = dr.GetString("Email");
                             book.Notes = dr.GetString("Notes");
+
+                            result.Add(book);
                         }
                     }
                 }
@@ -58,10 +60,7 @@ namespace eventagency.Model
             return library;
         }
 
-        internal Order GetLastOrder(Client? value)
-        {
-            throw new NotImplementedException();
-        }
+
         // синглтон end
     }
 }

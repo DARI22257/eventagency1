@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using eventagency.Model;
 using eventagency.VM;
 
 namespace eventagency
@@ -23,6 +24,7 @@ namespace eventagency
         public LibraryClients()
         {
             InitializeComponent();
+            ((LibrarysMvvm)this.DataContext).SetClose(Close);
         }
     }
 }
