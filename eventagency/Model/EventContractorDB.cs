@@ -70,7 +70,7 @@ namespace eventagency.Model
 
             if (connection.OpenConnection())
             {
-                var command = connection.CreateCommand("SELECT c.ID AS 'clientid', c.FullName, c.Phone, c.Email, c.Notes, ec.descriptionservice, ec.price, c1.id AS 'ClientId', c1.title as 'cTitle', c1.type, c1.email AS 'cemail', c1.notes AS 'cnotes', t.id AS 'TaskId', t.title AS 'ttitle', t.description, t.term, t.assigned, t.status, e.id, e.title AS 'etitle', e.date, e.place, e.budget, e.status FROM Clients c" +
+                var command = connection.CreateCommand("SELECT c.ID AS 'clientid', c.FullName, c.Phone, c.Email, c.Notes, ec.descriptionservice, ec.price, c1.id AS 'ClientId', c1.title as 'cTitle', c1.type, c1.email AS 'cemail', c1.notes AS 'cnotes', t.id AS 'TaskId', t.title AS 'ttitle', t.description, t.term, t.assigned, t.status AS 'status1', e.id, e.title AS 'etitle', e.date, e.place, e.budget, e.status FROM Clients c" +
                     " join EventContractor AS ec ON ec.idClient = c.id" +
                     " JOIN Contractor c1 ON ec.idContractor = c1.id" +
                     " JOIN Events e ON ec.idEvents = e.id" +
@@ -141,7 +141,7 @@ namespace eventagency.Model
                         if (!dr.IsDBNull(15))
                             assigned = dr.GetString("Assigned");
                         if (!dr.IsDBNull(16))
-                            status = dr.GetString("Status");
+                            status1 = dr.GetString("Status1");
                         if (!dr.IsDBNull(17))
                             ctitle = dr.GetString("cTitle");
                         if (!dr.IsDBNull(18))
@@ -165,7 +165,33 @@ namespace eventagency.Model
                                 Notes = notes,
                                 Phone = phone
                             },
+                            Event = new Event
+                            {
+                                ID = id,
+                                Title = etitle,
+                                Date = date,
+                                Place = place,
+                                Budget = budget,
+                                Status = status
+                            },
+                            Task = new TaskWork
+                            {
+                                ID = idTask,
+                                Title = ttitle,
+                                Description = description,
+                                Term = term,
+                                Assigned = assigned,
+                                Status = status1,
 
+                            },
+                            Contractor = new Contractor
+                            {
+                                ID = idContractor,
+                                Title = ctitle,
+                                Type = type,
+                                Email = cemail,
+                                Notes = cnotes,
+                            }
                         });
                     }
                 }

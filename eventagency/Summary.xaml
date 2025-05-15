@@ -45,29 +45,29 @@
                 <StackPanel DataContext="{Binding Client}" Margin="0 0 0 15">
                     <TextBlock Text="{Binding FullName, StringFormat=ФИО: {0}}"/>
                     <TextBlock Text="{Binding Phone, StringFormat=Телефон: {0}}"/>
-                    <TextBlock Text="{Binding Email}"/>
-                    <TextBlock Text="{Binding Notes}"/>
+                    <TextBlock Text="{Binding Email,  StringFormat=Email: {0}}"/>
+                    <TextBlock Text="{Binding Notes,  StringFormat=Заметки: {0}}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" DataContext="{Binding Event}">
-                    <TextBlock Text="{Binding Title}"/>
-                    <TextBlock Text="{Binding Date}"/>
-                    <TextBlock Text="{Binding Place}"/>
+                <StackPanel Grid.Row="1" DataContext="{Binding Event}" Margin="0 0 0 15">
+                    <TextBlock Text="{Binding Title,  StringFormat=Название: {0}}"/>
+                    <TextBlock Text="{Binding Date,  StringFormat=Дата: {0}}"/>
+                    <TextBlock Text="{Binding Place,  StringFormat=Место: {0}}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="2" DataContext="{Binding Task}">
-                    <TextBlock Text="{Binding Title}"/>
-                    <TextBlock Text="{Binding Term}"/>
-                    <TextBlock Text="{Binding Description}"/>
-                    <TextBlock Text="{Binding Assigned}"/>
-                    <TextBlock Text="{Binding Status}"/>
+                <StackPanel Grid.Row="2" DataContext="{Binding Task}" Margin="0 0 0 15">
+                    <TextBlock Text="{Binding Title,  StringFormat=Название: {0}}"/>
+                    <TextBlock Text="{Binding Term,  StringFormat=Дата: {0}}"/>
+                    <TextBlock Text="{Binding Description,  StringFormat=Описание: {0}}"/>
+                    <TextBlock Text="{Binding Assigned,  StringFormat=Руководитель: {0}}"/>
+                    <TextBlock Text="{Binding Status,  StringFormat=Статус: {0}}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" DataContext="{Binding Contractor}">
-                    <TextBlock Text="{Binding Title}"/>
-                    <TextBlock Text="{Binding Type}"/>
-                    <TextBlock Text="{Binding Email}"/>
-                    <TextBlock Text="{Binding Notes}"/>
+                <StackPanel Grid.Row="3" DataContext="{Binding Contractor}" Margin="0 0 0 15">
+                    <TextBlock Text="{Binding Title,  StringFormat=Название: {0}}"/>
+                    <TextBlock Text="{Binding Type,  StringFormat=Тип: {0}}"/>
+                    <TextBlock Text="{Binding Email,  StringFormat=Email: {0}}"/>
+                    <TextBlock Text="{Binding Notes,  StringFormat=Заметки: {0}}"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
