@@ -40,8 +40,8 @@
         <ListView Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding Contractors}" SelectedItem="{Binding SelectedContractor}" Background="MistyRose">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Title}" Width="100"/>
-                    <GridViewColumn Header="Номер телефона" DisplayMemberBinding="{Binding Type}" Width="100"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" Width="100"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Type}" Width="100"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="100"/>
                     <GridViewColumn Header="Заметки" DisplayMemberBinding="{Binding Notes}"/>
                 </GridView>
@@ -54,7 +54,7 @@
         </ListView>
 
         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Добавить клиента" Command="{Binding InsertContractor}" Width="150" Height="40" />
+            <Button Content="Добавить подрядчика" Command="{Binding InsertContractor}" Width="150" Height="40" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">

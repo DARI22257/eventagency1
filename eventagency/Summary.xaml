@@ -53,6 +53,8 @@
                     <TextBlock Text="{Binding Title,  StringFormat=Название: {0}}"/>
                     <TextBlock Text="{Binding Date,  StringFormat=Дата: {0}}"/>
                     <TextBlock Text="{Binding Place,  StringFormat=Место: {0}}"/>
+                    <TextBlock Text="{Binding Budget,  StringFormat=Бюджет: {0}}"/>
+                    <TextBlock Text="{Binding Status,  StringFormat=Статус: {0}}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" DataContext="{Binding Task}" Margin="0 0 0 15">
