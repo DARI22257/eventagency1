@@ -144,7 +144,7 @@ namespace eventagency.Model
         }
 
 
-        internal bool Remove(Client remove)
+        internal bool Remove(Event remove)
         {
             bool result = false;
             if (connection == null)

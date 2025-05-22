@@ -51,13 +51,20 @@ namespace eventagency.VM
 
         public CommandMvvm NextPage { get; set; }
         public Order SelectedOrder { get; internal set; }
+        public CommandMvvm RemoveTask { get; set; }
+        public CommandMvvm OpenEditTask { get; set; }
 
         public TasksMvvm()
         {
+            if (NewTask == null)
+                NewTask = new TaskWork();
             SelectAll();
             InsertTask = new CommandMvvm(() =>
             {
-                TaskDB.GetDb().Insert(NewTask);
+                if (NewTask.ID == 0)
+                    TaskDB.GetDb().Insert(NewTask);
+                else
+                    TaskDB.GetDb().Update(NewTask);
                 NewTask = new();
                 SelectAll();
             },
@@ -75,6 +82,21 @@ namespace eventagency.VM
                 close?.Invoke();
             },
                 () => SelectedTask != null);
+
+            RemoveTask = new CommandMvvm(() =>
+            {
+                TaskDB.GetDb().Remove(SelectedTask);
+                SelectAll();
+            }, () => SelectedTask != null);
+
+            OpenEditTask = new CommandMvvm(() =>
+            {
+                int id = SelectedTask.ID;
+                //ClientDB.GetDb().Update(SelectedClient);
+                SelectAll();
+                NewTask = Tasks.FirstOrDefault(c => c.ID == id);
+
+            }, () => SelectedTask != null);
         }
 
         private void SelectAll()

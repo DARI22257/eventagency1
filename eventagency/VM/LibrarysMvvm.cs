@@ -16,7 +16,7 @@ namespace eventagency.VM
         private Client? selectedClient;
         private EventContractor selectedOrder;
         private ObservableCollection<EventContractor> eventContractors;
-
+        public CommandMvvm RemoveOrder { get; set; }
         public ObservableCollection<EventContractor> EventContractors
         {
             get => eventContractors;
@@ -110,6 +110,12 @@ namespace eventagency.VM
             Clients = Library.GetTable().SearchClient(search);
             ViewOrders = Visibility.Visible;
             ViewOrder = Visibility.Collapsed;
+
+            RemoveOrder = new CommandMvvm(() =>
+            {
+                EventContractorDB.GetDb().Remove(SelectedOrder);
+                SelectAll();
+            }, () => SelectedOrder != null);
         }
 
         Action close;

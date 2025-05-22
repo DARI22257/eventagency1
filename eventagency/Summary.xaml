@@ -27,7 +27,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Пождтверждение" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"/>
+        <Label Content="Подтверждение" Grid.Column="1" HorizontalAlignment="Center" FontSize="20"/>
         <Label Content="Цена" Grid.Row="1" FontSize="16"/>
         <TextBox Grid.Row="2" Height="30" Text="{Binding SelectedOrder.EventContractor.Price}"/>
         <Label Content="Описание сервиса " Grid.Row="1"  Grid.Column="2" FontSize="16"/>

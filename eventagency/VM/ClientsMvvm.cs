@@ -2,6 +2,7 @@
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,20 +52,27 @@ namespace eventagency.VM
         public CommandMvvm InsertClient { get; set; }
 
         public CommandMvvm NextPage { get; set; }
+        public CommandMvvm RemoveClient { get; set; }
+        public CommandMvvm OpenEditClient { get; set; }
         public ClientsMvvm()
         {
+            if (NewClient == null)
+                NewClient = new Client();
             SelectAll();
             InsertClient = new CommandMvvm(() =>
             {
-                ClientDB.GetDb().Insert(NewClient);
+                if (NewClient.ID == 0)
+                    ClientDB.GetDb().Insert(NewClient);
+                else
+                    ClientDB.GetDb().Update(NewClient);
                 NewClient = new();
                 SelectAll();
             },
                 () =>
-                !string.IsNullOrEmpty(newClient.FullName) &&
-                !string.IsNullOrEmpty(newClient.Phone) &&
-                !string.IsNullOrEmpty(newClient.Email) &&
-                !string.IsNullOrEmpty(newClient.Notes));
+                !string.IsNullOrEmpty(NewClient.FullName) &&
+                !string.IsNullOrEmpty(NewClient.Phone) &&
+                !string.IsNullOrEmpty(NewClient.Email) &&
+                !string.IsNullOrEmpty(NewClient.Notes));
 
             NextPage = new CommandMvvm(() =>
             {
@@ -72,7 +80,22 @@ namespace eventagency.VM
                 events.Show();
                 close?.Invoke();
             },
-                () => SelectedClient != null);
+            () => SelectedClient != null);
+
+            RemoveClient = new CommandMvvm(() =>
+            {
+                ClientDB.GetDb().Remove(SelectedClient);
+                SelectAll();
+            }, () => SelectedClient != null);
+
+            OpenEditClient = new CommandMvvm(() =>
+            {
+                int id = SelectedClient.ID;
+                //ClientDB.GetDb().Update(SelectedClient);
+                SelectAll();
+                NewClient = Clients.FirstOrDefault(c => c.ID == id);
+
+            }, () => SelectedClient != null);
         }
 
         private void SelectAll()

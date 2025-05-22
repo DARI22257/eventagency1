@@ -51,13 +51,20 @@ namespace eventagency.VM
 
         public CommandMvvm NextPage { get; set; }
         public Order SelectedOrder { get; internal set; }
+        public CommandMvvm RemoveContractor { get; set; }
+        public CommandMvvm OpenEditContractor { get; set; }
 
         public ContractorsMvvm()
         {
+            if (NewContractor == null)
+                NewContractor = new Contractor();
             SelectAll();
             InsertContractor = new CommandMvvm(() =>
             {
-                ContractorDB.GetDb().Insert(NewContractor);
+                if (NewContractor.ID == 0)
+                    ContractorDB.GetDb().Insert(NewContractor);
+                else
+                    ContractorDB.GetDb().Update(NewContractor);
                 NewContractor = new();
                 SelectAll();
             },
@@ -75,6 +82,21 @@ namespace eventagency.VM
                 close?.Invoke();
             },
                 () => SelectedOrder != null);
+
+            RemoveContractor = new CommandMvvm(() =>
+            {
+                ContractorDB.GetDb().Remove(SelectedContractor);
+                SelectAll();
+            }, () => SelectedContractor != null);
+
+            OpenEditContractor = new CommandMvvm(() =>
+            {
+                int id = SelectedContractor.ID;
+                //ClientDB.GetDb().Update(SelectedClient);
+                SelectAll();
+                NewContractor = Contractors.FirstOrDefault(c => c.ID == id);
+
+            }, () => SelectedContractor != null);
         }
 
         private void SelectAll()
