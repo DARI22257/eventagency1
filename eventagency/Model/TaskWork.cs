@@ -11,7 +11,7 @@ namespace eventagency.Model
         public int ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Term { get; set; }
+        public DateTime Term { get; set; } = DateTime.Now;
         public string Assigned { get; set; }
         public string Status { get; set; }
         public Event Event { get; set; }

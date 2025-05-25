@@ -161,6 +161,58 @@ namespace eventagency.Model
             connection.CloseConnection();
             return result;
         }
+        internal bool RemoveWithRelations(Client client)
+        {
+            bool result = false;
+            if (connection == null || client == null)
+                return false;
+
+            if (connection.OpenConnection())
+            {
+                try
+                {
+                    var cmd = connection.CreateCommand(@"
+                DELETE FROM EventContractor WHERE idClient = @id;
+
+                DELETE FROM Tasks 
+                WHERE ID IN (
+                    SELECT idTask FROM (
+                        SELECT idTask FROM EventContractor WHERE idClient = @id
+                    ) AS tmpTasks
+                );
+
+                DELETE FROM Events 
+                WHERE ID IN (
+                    SELECT idEvents FROM (
+                        SELECT idEvents FROM EventContractor WHERE idClient = @id
+                    ) AS tmpEvents
+                );
+
+                DELETE FROM Contractor 
+                WHERE ID IN (
+                    SELECT idContractor FROM (
+                        SELECT idContractor FROM EventContractor WHERE idClient = @id
+                    ) AS tmpContractors
+                );
+
+                DELETE FROM Clients WHERE id = @id;
+            ");
+                    cmd.Parameters.Add(new MySqlParameter("id", client.ID));
+                    cmd.ExecuteNonQuery();
+                    result = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при удалении: " + ex.Message);
+                }
+                finally
+                {
+                    connection.CloseConnection();
+                }
+            }
+
+            return result;
+        }
 
         static ClientDB db;
         public static ClientDB GetDb()

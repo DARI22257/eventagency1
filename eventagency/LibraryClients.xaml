@@ -15,6 +15,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -39,9 +41,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel  Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Удалить запись" Width="150" Height="40" Command="{Binding RemoveOrder}" />
-        </StackPanel>
+        <Button Content="Удалить" Grid.Column="1" Width="200" Height="30" Margin="10" Command="{Binding RemoveClientWithData}" />
         <ScrollViewer Grid.Column="1" Grid.Row="1" Visibility="{Binding ViewOrder}" DataContext="{Binding SelectedOrder}" Background="LavenderBlush">
             <Grid>
                 <Grid.RowDefinitions>
@@ -51,12 +51,6 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel DataContext="{Binding Client}" Margin="0 0 15 15">
-                    <TextBlock Text="{Binding FullName, StringFormat=Название: {0}}"/>
-                    <TextBlock Text="{Binding Phone, StringFormat=Дата: {0}}"/>
-                    <TextBlock Text="{Binding Email, StringFormat=Место: {0}}"/>
-                    <TextBlock Text="{Binding Notes, StringFormat=Место: {0}}"/>
-                </StackPanel>
 
                 <StackPanel DataContext="{Binding Event}" Margin="0 0 15 15">
                     <TextBlock Text="{Binding Title, StringFormat=Название: {0}}"/>
@@ -84,11 +78,14 @@
             <ListBox.ItemTemplate>
                 <DataTemplate >
                     <Grid>
-                        <TextBlock Text="{Binding Price}"/>
+                        <TextBlock Text="{Binding DescriptionService }"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
+        <TextBlock Text="{Binding TotalPrice, StringFormat=Общая стоимость заказа: {0} руб.}" Grid.Row="2" FontWeight="Bold" FontSize="16" Margin="10" />
+        <TextBlock Text="{Binding TotalPriceAll, StringFormat=Всего заказов на сумму: {0} руб.}" Grid.Column="1" Grid.Row="2" FontWeight="Bold"  FontSize="16" Margin="10" />
+
     </Grid>
 </Window>

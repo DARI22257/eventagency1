@@ -60,9 +60,6 @@
             <Button Content="Далее" Width="150" Height="40" Command="{Binding NextPage}" />
         </StackPanel>
 
-        <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Удалить" Width="150" Height="40" Command="{Binding RemoveClient}" />
-        </StackPanel>
 
         <StackPanel  Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
             <Button Content="Редактировать" Width="150" Height="40" Command="{Binding OpenEditClient}" />

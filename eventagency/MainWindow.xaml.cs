@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using eventagency.Model;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,12 @@ namespace eventagency
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static MainWindow Instance { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
+            Instance = this;
+            LoadUpcomingEvents();
         }
         private void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -29,6 +33,20 @@ namespace eventagency
         {
             LibraryClients clients = new LibraryClients();
             clients.Show();
+        }
+        public void LoadUpcomingEvents()
+        {
+            List<Event> events = EventDB.GetDb().SelectAll();
+
+            var upcoming = events
+                .Where(ev => ev.Date >= DateTime.Today && ev.Date <= DateTime.Today.AddDays(30))
+                .OrderBy(ev => ev.Date)
+                .Select(ev => $"{ev.Date:dd MMMM}: {ev.Title}")
+                .ToList();
+
+            EventsBlock.Text = upcoming.Any()
+                ? string.Join("\n", upcoming)
+                : "Нет запланированных мероприятий в ближайшие 30 дней.";
         }
     }
 }

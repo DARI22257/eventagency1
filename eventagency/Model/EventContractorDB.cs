@@ -62,6 +62,8 @@ namespace eventagency.Model
             return result;
         }
 
+
+
         internal List<EventContractor> SelectAll(int clientId)
         {
             List<EventContractor> eventcontractors = new List<EventContractor>();
@@ -202,6 +204,28 @@ namespace eventagency.Model
             }
             connection.CloseConnection();
             return eventcontractors;
+        }
+        public int GetTotalPriceAll()
+        {
+            int total = 0;
+
+            if (connection.OpenConnection())
+            {
+                var cmd = connection.CreateCommand("SELECT SUM(price) FROM EventContractor");
+                try
+                {
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value)
+                        total = Convert.ToInt32(result);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при подсчёте суммы: " + ex.Message);
+                }
+                connection.CloseConnection();
+            }
+
+            return total;
         }
 
         internal bool Update(EventContractor edit)

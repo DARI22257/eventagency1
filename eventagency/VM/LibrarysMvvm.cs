@@ -15,8 +15,10 @@ namespace eventagency.VM
         private string search;
         private Client? selectedClient;
         private EventContractor selectedOrder;
+        public CommandMvvm RemoveClientWithData { get; set; }
         private ObservableCollection<EventContractor> eventContractors;
         public CommandMvvm RemoveOrder { get; set; }
+
         public ObservableCollection<EventContractor> EventContractors
         {
             get => eventContractors;
@@ -77,8 +79,29 @@ namespace eventagency.VM
         private void SelectAll()
         {
             if (SelectedClient != null)
-                EventContractors = new ObservableCollection<EventContractor>( EventContractorDB.GetDb().SelectAll(SelectedClient.ID));
+            {
+                var all = EventContractorDB.GetDb().SelectAll(SelectedClient.ID);
+                EventContractors = new ObservableCollection<EventContractor>(all);
+                TotalPrice = all.Sum(ec => ec.Price); // ← сумма всех заказов
+            }
+            else
+            {
+                EventContractors = new ObservableCollection<EventContractor>();
+                TotalPrice = 0;
+            }
         }
+        private int totalPriceAll;
+        public int TotalPriceAll
+        {
+            get => totalPriceAll;
+            set
+            {
+                totalPriceAll = value;
+                Signal();
+            }
+
+        }
+
 
 
         private void SearchClient(string search)
@@ -104,6 +127,16 @@ namespace eventagency.VM
                 Signal();
             }
         }
+        private int totalPrice;
+        public int TotalPrice
+        {
+            get => totalPrice;
+            set
+            {
+                totalPrice = value;
+                Signal();
+            }
+        }
 
         public LibrarysMvvm()
         {
@@ -111,20 +144,39 @@ namespace eventagency.VM
             ViewOrders = Visibility.Visible;
             ViewOrder = Visibility.Collapsed;
 
-            RemoveOrder = new CommandMvvm(() =>
+            RemoveClientWithData = new CommandMvvm(() =>
             {
-                EventContractorDB.GetDb().Remove(SelectedOrder);
-                SelectAll();
-            }, () => SelectedOrder != null);
+                if (SelectedClient != null)
+                {
+                    if (MessageBox.Show("Удалить клиента и все связанные данные?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        ClientDB.GetDb().RemoveWithRelations(SelectedClient);
+                        Clients = Library.GetTable().SearchClient("");
+                        EventContractors = new ObservableCollection<EventContractor>();
+                        SelectedClient = null;
+
+                        // ⬇️ Обновляем сумму всех заказов
+                        TotalPriceAll = EventContractorDB.GetDb().GetTotalPriceAll();
+                    }
+                }
+            }, () => SelectedClient != null);
+
+            TotalPriceAll = EventContractorDB.GetDb().GetTotalPriceAll();
+
         }
+
+
 
         Action close;
         private Visibility viewOrders;
         private Visibility viewOrder;
 
+
+
         internal void SetClose(Action close)
         {
             this.close = close;
         }
+        
     }
 }

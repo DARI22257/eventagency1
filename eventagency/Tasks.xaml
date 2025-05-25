@@ -57,7 +57,7 @@
 
 
         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Добавить мероприятие" Command="{Binding InsertTask}" Width="150" Height="40" />
+            <Button Content="Добавить задачу" Command="{Binding InsertTask}" Width="150" Height="40" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">

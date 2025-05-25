@@ -15,7 +15,13 @@
             
         </Grid.RowDefinitions>
 
-        <TextBlock Text="❤︎🎉 Ивент-Агентство 🎉❤︎" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="❤︎🎉 Ивент-Агентство 🎉❤︎" FontSize="30" Grid.ColumnSpan="2" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
 
 
         <StackPanel Grid.Column="0" Margin="10" Grid.Row="1">
@@ -25,6 +31,10 @@
             <StackPanel Grid.Column="0" Margin="10" Grid.Row="2">
             <Button Content="📚 Библиотека 📚" FontSize="25" Width="300" Height="50" Click="NavigateButton_Click1"/>
             </StackPanel>
+
+        <GroupBox Header="Ближайшие мероприятия" Background="Violet" FontSize="18" Margin="10" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Name="EventsBlock" FontSize="16"  Background="MistyRose" FontWeight="Black" TextWrapping="Wrap" />
+        </GroupBox>
 
     </Grid>
 </Window>

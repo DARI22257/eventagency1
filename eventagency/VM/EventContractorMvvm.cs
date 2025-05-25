@@ -70,7 +70,9 @@ namespace eventagency.VM
                 }
 
                 NewEventContractor = new();
-                
+
+                MainWindow.Instance?.LoadUpcomingEvents();
+
             },
                 () => SelectedOrder != null &&
                  SelectedOrder.EventContractor.Price != 0 &&
